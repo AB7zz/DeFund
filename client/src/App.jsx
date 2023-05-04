@@ -12,6 +12,24 @@ export default function App() {
           <Route path="/chit/:id" element={<Chit/>} />
         </Routes>
       </BrowserRouter>
+      <Navbar />
+    </div>
+  )
+}
+       
+
+        
+        
+
+       
+
+          
+
+          
+
+       
+      
+>>>>>>> bff6fa8c0edd005415e3ac8218c8df871f3bad2b
     </div>
   );
 }

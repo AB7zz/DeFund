@@ -9,16 +9,26 @@
     "deploy": "yarn build && npx thirdweb@latest upload dist"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@emotion/react": "^11.10.8",
     "@emotion/styled": "^11.10.8",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.12.3",
+=======
+    "@headlessui/react": "^1.7.14",
+    "@heroicons/react": "^2.0.17",
+>>>>>>> bff6fa8c0edd005415e3ac8218c8df871f3bad2b
     "@thirdweb-dev/react": "^3.11.1",
     "@thirdweb-dev/sdk": "^3.10.5",
     "ethers": "^5.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+<<<<<<< HEAD
     "react-router-dom": "^6.11.1"
+=======
+    "react-router-dom": "^6.11.1",
+    "yarn": "^1.22.19"
+>>>>>>> bff6fa8c0edd005415e3ac8218c8df871f3bad2b
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^2",
