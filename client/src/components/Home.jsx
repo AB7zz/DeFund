@@ -10,7 +10,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 const Card = ({title, desc, people, amount, by, initial}) => {
     return (
         
-        <div className="sm:w-[288px] w-full rounded-[15px] bg-[#f1f1f1] cursor-pointer">
+        <div className="sm:w-[288px] w-full rounded-[15px] bg-slate-50 cursor-pointer">
             <div className="flex p-4">
                 <div className='mr-10'>
                     <div className="block">
@@ -32,7 +32,7 @@ const Card = ({title, desc, people, amount, by, initial}) => {
 
                     <div className="flex items-center mt-[20px] gap-[12px]">
                         <p className="flex-1 font-epilogue font-normal text-[12px] text-[#808191] truncate">by <span className="text-[#b2b3bd]">{by}</span></p>
-                        <button className='hover:bg-green-800 bg-green-600 text-white px-3 rounded'><AddIcon/> Join</button>
+                        <button className='hover:bg-blue-900 bg-blue-800 text-white px-3 rounded'><AddIcon/> Join</button>
                     </div>
                 </div>
             </div>
