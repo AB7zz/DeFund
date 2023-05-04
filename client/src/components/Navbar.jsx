@@ -1,13 +1,14 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Link } from 'react-router-dom'
 
 const navigation = [
   //{ name: 'DeFund', href: '#', current: true },
-  { name: 'My Chits', href: '#', current: false },   
-  { name: 'Create', href: '#', current: false },
-  { name: 'Feed', href: '#', current: false },
-  { name: 'About', href: '#', current: false },
+  { name: 'My Chits', href: '/', current: false },   
+  { name: 'Create', href: '/create', current: false },
+  { name: 'Feed', href: '/feed', current: false },
+  { name: 'About', href: '/about', current: false }
 ]
 
 function classNames(...classes) {
@@ -43,12 +44,13 @@ sm:items-stretch sm:justify-start">
                 <div className="hidden sm:ml-6 sm:block">
 
                   <div className="flex space-x-6">
-                  <h1 className="text-2xl font-bold
-text-blue-800">DeFund</h1>
+                  <Link to='/'><h1 className="text-2xl font-bold
+text-blue-800">DeFund</h1></Link>
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
                         href={item.href}
+                        to={item.href}
                         className={classNames(
                           item.current ? 'bg-gray-900 text-white' :
 'text-gray-500 hover:bg-gray-300',
@@ -57,7 +59,7 @@ text-blue-800">DeFund</h1>
                         aria-current={item.current ? 'page' : undefined}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -100,13 +102,14 @@ ring-black ring-opacity-5 focus:outline-none">
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
+                          <Link
                             href="#"
+                            to='/analytics'
                             className={classNames(active ?
 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
-                            Settings
-                          </a>
+                            Analytics
+                          </Link>
                         )}
                       </Menu.Item>
                       <Menu.Item>
@@ -116,7 +119,7 @@ ring-black ring-opacity-5 focus:outline-none">
                             className={classNames(active ?
 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
-                            Sign out
+                            Disconnect
                           </a>
                         )}
                       </Menu.Item>

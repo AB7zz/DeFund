@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import CreateChitForm from "./components/CreateChitForm";
 import About from "./components/About";
 import Feed from "./components/Feed";
+import Analytics from "./components/Analytics";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
           <Route path="/chit/:id" element={<Chit/>} />
           <Route path="/about" element={<About/>} />
           <Route path="/feed" element={<Feed/>} />
+          <Route path="/analytics" element={<Analytics/>} />
           
         </Routes>
       </BrowserRouter>

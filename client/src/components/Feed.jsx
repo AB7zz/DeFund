@@ -73,7 +73,9 @@ const Feed = () => {
     ))}
   </div>
 </div>
+<div className='bottom-0 absolute'>
 <Footer />
+</div>
 </div>
 );
 };

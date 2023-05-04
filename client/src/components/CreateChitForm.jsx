@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import { Link } from 'react-router-dom';
 
 const CreateChitForm = () => {
   const [title, setTitle] = useState('');
@@ -34,27 +35,27 @@ const CreateChitForm = () => {
         <h3 className="text-xl font-bold mb-4 text-blue-800">Create a New Chit</h3>
         <form>
           <label htmlFor="title" className="block font-bold mb-2">Title:</label>
-          <input type="text" id="title" name="title" className="w-full mb-4 p-2 border border-gray-400 rounded" />
+          <input type="text" id="title" name="title" placeholder='Enter title' className="bg-slate-50 w-full mb-4 p-2 border-none border-gray-400 rounded" />
 
           <label htmlFor="description" className="block font-bold mb-2">Description:</label>
-          <textarea id="description" name="description" className="w-full mb-4 p-2 border border-gray-400 rounded" />
+          <textarea id="description" placeholder='Enter description' name="description" className="w-full mb-4 p-2 border-none bg-slate-50 border-gray-400 rounded" />
 
           <label htmlFor="installmentAmount" className="block font-bold mb-2">Total Amount:</label>
-          <input type="number" id="totalAmount" name="totalAmount" className="w-full mb-4 p-2 border border-gray-400 rounded" />
+          <input type="number" id="totalAmount" placeholder='Enter Total Amount' name="totalAmount" className="w-full mb-4 p-2 border-none bg-slate-50 border-gray-400 rounded" />
 
           <label htmlFor="installmentAmount" className="block font-bold mb-2">Installment Amount:</label>
-          <input type="number" id="installmentAmount" name="installmentAmount" className="w-full mb-4 p-2 border border-gray-400 rounded" />
+          <input type="number" id="installmentAmount" placeholder='Enter Installment' name="installmentAmount" className="w-full mb-4 p-2 border-none bg-slate-50 border-gray-400 rounded" />
 
-          <label htmlFor="period" className="block font-bold mb-2">Period (in days):</label>
-          <input type="number" id="period" name="period" className="w-full mb-4 p-2 border border-gray-400 rounded" />
+          <label htmlFor="period" className="block font-bold mb-2">Period (in months):</label>
+          <input type="number" id="period" placeholder='eg: 2' name="period" className="w-full mb-4 p-2 border-none bg-slate-50 border-gray-400 rounded" />
 
           <label htmlFor="participants" className="block font-bold mb-2">Number of Participants:</label>
-          <input type="number" id="participants" name="participants" className="w-full mb-4 p-2 border border-gray-400 rounded" />
+          <input type="number" id="participants" placeholder='eg: 5' name="participants" className="w-full mb-4 p-2 border-none bg-slate-50 border-gray-400 rounded" />
 
           <label htmlFor="deadline" className="block font-bold mb-2">Deadline:</label>
-          <input type="date" id="deadline" name="deadline" className="w-full mb-4 p-2 border border-gray-400 rounded" />
+          <input type="date" id="deadline"  name="deadline" className="w-full mb-4 p-2 border-none bg-slate-50 border-gray-400 rounded" />
 
-          <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create Chit</button>
+          <Link to='/' type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create Chit</Link>
         </form>
       </div>
     </div>

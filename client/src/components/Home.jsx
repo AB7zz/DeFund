@@ -160,7 +160,7 @@ const Home = () => {
   return (
     <div>
         <Navbar />
-        <div className='w-screen'>
+        <div className='w-screen mt-10'>
             <h1 className='text-2xl px-10 py-10 font-bold'>All Chits</h1>
             <div className='flex justify-evenly w-[100%] mt-2'>
                 {posts.map(post => <Card title={post.title} desc={post.desc} people={post.people} amount={post.amount} by={post.by} initial={post.initial} />)}

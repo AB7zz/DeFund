@@ -1,7 +1,10 @@
 import React from "react";
+import Navbar from "./Navbar";
 
 const About = () => {
   return (
+    <>
+    <Navbar/>
     <div className="flex flex-col items-center justify-center py-10 mt-20">
       <h1 className="text-4xl font-bold mb-6">About Us</h1>
       <div className="max-w-2xl text-center mb-6">
@@ -36,6 +39,7 @@ chit fund companies. </p>
         </ul>
       </div>
     </div>
+    </>
   );
 };
 
