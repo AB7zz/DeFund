@@ -6,6 +6,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { Link } from 'react-router-dom';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
+import Footer from './Footer';
 
 const MyChit = ({title, desc, people, amount, by, initial, paid}) => {
     return (
@@ -171,6 +172,7 @@ const Home = () => {
                 {myChits.map(post => <MyChit title={post.title} desc={post.desc} people={post.people} amount={post.amount} by={post.by} initial={post.initial} paid={post.paid} />)}
             </div>
         </div>
+        <Footer />
     </div>
   )
 }
