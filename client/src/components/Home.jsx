@@ -6,6 +6,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { Link } from 'react-router-dom';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
+import Footer from './Footer';
 
 const MyChit = ({title, desc, people, amount, by, initial, paid}) => {
     return (
@@ -157,20 +158,21 @@ const Home = () => {
         }
     ])
   return (
-    <div className='pb-10'>
+    <div>
         <Navbar />
         <div className='w-screen'>
             <h1 className='text-2xl px-10 py-10 font-bold'>All Chits</h1>
-            <div className='flex justify-evenly w-[100%] mt-10'>
+            <div className='flex justify-evenly w-[100%] mt-2'>
                 {posts.map(post => <Card title={post.title} desc={post.desc} people={post.people} amount={post.amount} by={post.by} initial={post.initial} />)}
             </div>
         </div>
         <div className='w-screen'>
             <h1 className='text-2xl px-10 py-10 font-bold'>My Chits</h1>
-            <div className='flex justify-evenly w-[100%] mt-10'>
+            <div className='flex justify-evenly w-[100%] mt-2'>
                 {myChits.map(post => <MyChit title={post.title} desc={post.desc} people={post.people} amount={post.amount} by={post.by} initial={post.initial} paid={post.paid} />)}
             </div>
         </div>
+        <Footer />
     </div>
   )
 }

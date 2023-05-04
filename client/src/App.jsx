@@ -2,6 +2,9 @@ import { ConnectWallet } from "@thirdweb-dev/react";
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 import Chit from "./components/Chit";
 import Home from "./components/Home";
+import CreateChitForm from "./components/CreateChitForm";
+import About from "./components/About";
+import Feed from "./components/Feed";
 
 export default function App() {
   return (
@@ -9,7 +12,11 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home/>} />
+          <Route path="/create" element={<CreateChitForm/>} />
           <Route path="/chit/:id" element={<Chit/>} />
+          <Route path="/about" element={<About/>} />
+          <Route path="/feed" element={<Feed/>} />
+          
         </Routes>
       </BrowserRouter>
     </div>
