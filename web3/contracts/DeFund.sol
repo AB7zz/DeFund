@@ -152,6 +152,7 @@ contract ChitFund {
     }
 
     function withdraw(uint256 _id) public {
+
         Chit storage chit = chits[_id];
 
         uint256 participantIndex = getParticipantIndex(chit);
@@ -163,7 +164,7 @@ contract ChitFund {
         require(chit.currentInstallment == 1, "Chit is not complete");
 
         chit.participants[participantIndex].wallet.transfer(
-            chit.totalAmount / chit.numberOfParticipants
+            chit.totalAmount
         );
         chit.participants[participantIndex].paid = false;
     }
