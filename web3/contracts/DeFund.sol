@@ -19,6 +19,7 @@ contract ChitFund {
         uint256 currentInstallment;
         uint256 deadline;
         Participant[] participants;
+        Participant[] winners;
     }
 
     mapping(uint256 => Chit) public chits;
@@ -100,6 +101,7 @@ contract ChitFund {
 
         // require(msg.value == chit.installmentAmount, "Failed to send payment to contract wallet");
 
+        // require(msg.value == chit.installmentAmount, "Incorrect installment amount");
         require(msg.value == chit.installmentAmount, "Incorrect installment amount");
 
         chit.participants[participantIndex].paid = true;
@@ -182,15 +184,24 @@ contract ChitFund {
         return address(this);
     }
 
-    // function to accept installment amount stored in chit.installmentAmount to the contract
-    // function acceptInstallment(uint256 _id) public payable {
-    //     Chit storage chit = chits[_id];
-    //     require(msg.value == chit.installmentAmount, "Amount not equal to installment amount");
-    // }
+//function to transfer totalAmount to random member of the chit
+    function transferAmount(uint256 _id) public payable {
+        Chit storage chit = chits[_id];
 
-    //function to pay particular amount of ether to the contract
-    // function payAmount(uint256 _amount) public payable {
-    //     require(msg.value == _amount);
-    // }
-    
+        uint256 participantIndex = getParticipantIndex(chit);
+
+        require(
+            participantIndex != chit.numberOfParticipants,
+            "You are not a participant"
+        );
+        require(chit.currentInstallment == 1, "Chit is not complete");
+
+        uint256 random = uint256(
+            keccak256(abi.encodePacked(block.difficulty, block.timestamp))
+        ) % chit.numberOfParticipants;
+
+        chit.participants[random].wallet.transfer(chit.totalAmount);
+        chit.winners.push(chit.participants[random]);
+    }
+
 }
