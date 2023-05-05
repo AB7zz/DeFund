@@ -68,40 +68,34 @@ contract ChitFund {
         chit.numberOfParticipants = _numberOfParticipants;
         chit.currentInstallment = 1;
         chit.deadline = _deadline;
-
-        for (uint256 i = 0; i < _numberOfParticipants; i++) {
-            chit.participants.push(Participant(payable(address(0)), false));
-        }
+        chit.participants.push(Participant(payable(msg.sender), false));
 
         numberOfChits++;
 
         return numberOfChits - 1;
     }
 
-    function joinChit(uint256 _id) public payable {
-        Chit storage chit = chits[_id];
+    function joinChit(uint256 _id) public {
+        Chit storage chit = chits[_id]; 
 
         require(chit.currentInstallment == 1, "Chit has already started");
-        require(
-            msg.value == chit.installmentAmount,
-            "Incorrect installment amount"
-        );
 
-        uint256 participantIndex = chit.numberOfParticipants -
-            chit.participants.length;
-
-        require(participantIndex > 0, "Chit is full");
-
-        chit.participants[participantIndex - 1].wallet = payable(msg.sender);
+        uint256 participantIndex = chit.participants.length;
 
         if (participantIndex == chit.numberOfParticipants) {
             chit.currentInstallment++;
-            chit.deadline = block.timestamp + chit.installmentPeriod;
         }
+
+        require(participantIndex < chit.numberOfParticipants, "Chit is full");
+
+        chit.participants.push(Participant(payable(msg.sender), false));
+
     }
 
     function payInstallment(uint256 _id) public {
         Chit storage chit = chits[_id];
+
+        // require(msg.value == chit.installmentAmount, "Not valid amount");
 
         require(chit.currentInstallment > 1, "Chit has not started yet");
         require(block.timestamp <= chit.deadline, "Deadline has passed");
@@ -117,7 +111,7 @@ contract ChitFund {
             "Installment already paid"
         );
 
-        // Transfer USDT from the sender to the ChitFund contract
+
         require(
             usdt.transferFrom(
                 msg.sender,
@@ -129,11 +123,11 @@ contract ChitFund {
 
         chit.participants[participantIndex].paid = true;
 
-        if (chit.currentInstallment == chit.numberOfParticipants) {
+        if (chit.currentInstallment == chit.numberOfParticipants + 1) {
             chit.currentInstallment = 1;
+            chit.deadline = block.timestamp + chit.installmentPeriod;
         } else {
             chit.currentInstallment++;
-            chit.deadline = block.timestamp + chit.installmentPeriod;
         }
 
         (bool sent, ) = chit.creator.call{value: chit.installmentAmount}("");
@@ -167,5 +161,15 @@ contract ChitFund {
             chit.totalAmount
         );
         chit.participants[participantIndex].paid = false;
+    }
+
+    function getParticipants(uint256 _id)
+        public
+        view
+        returns (Participant[] memory)
+    {
+        Chit storage chit = chits[_id];
+
+        return chit.participants;
     }
 }
