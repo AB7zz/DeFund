@@ -1,20 +1,7 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-interface IERC20 {
-    function transferFrom(
-        address sender,
-        address recipient,
-        uint256 amount
-    ) external returns (bool);
-}
-
 contract ChitFund {
-    IERC20 private usdt;
-
-    constructor(address _usdtAddress) {
-        usdt = IERC20(_usdtAddress);
-    }
 
     struct Participant {
         address payable wallet;
@@ -76,26 +63,23 @@ contract ChitFund {
     }
 
     function joinChit(uint256 _id) public {
-        Chit storage chit = chits[_id]; 
+        Chit storage chit = chits[_id];
 
         require(chit.currentInstallment == 1, "Chit has already started");
 
         uint256 participantIndex = chit.participants.length;
 
-        if (participantIndex == chit.numberOfParticipants) {
+        if (participantIndex == chit.numberOfParticipants - 1) {
             chit.currentInstallment++;
         }
 
         require(participantIndex < chit.numberOfParticipants, "Chit is full");
 
         chit.participants.push(Participant(payable(msg.sender), false));
-
     }
 
-    function payInstallment(uint256 _id) public {
+    function payInstallment(uint256 _id) external payable {
         Chit storage chit = chits[_id];
-
-        // require(msg.value == chit.installmentAmount, "Not valid amount");
 
         require(chit.currentInstallment > 1, "Chit has not started yet");
         require(block.timestamp <= chit.deadline, "Deadline has passed");
@@ -111,15 +95,12 @@ contract ChitFund {
             "Installment already paid"
         );
 
+        // (bool sent, ) = address(this).call{value: chit.installmentAmount}(new bytes(0)  );
+        // require(sent, "Failed to send payment to contract wallet");
 
-        require(
-            usdt.transferFrom(
-                msg.sender,
-                address(this),
-                chit.installmentAmount
-            ),
-            "Failed to transfer USDT"
-        );
+        // require(msg.value == chit.installmentAmount, "Failed to send payment to contract wallet");
+
+        require(msg.value == chit.installmentAmount, "Incorrect installment amount");
 
         chit.participants[participantIndex].paid = true;
 
@@ -129,9 +110,6 @@ contract ChitFund {
         } else {
             chit.currentInstallment++;
         }
-
-        (bool sent, ) = chit.creator.call{value: chit.installmentAmount}("");
-        require(sent, "Failed to send payment to chit creator");
     }
 
     function getParticipantIndex(
@@ -146,7 +124,6 @@ contract ChitFund {
     }
 
     function withdraw(uint256 _id) public {
-
         Chit storage chit = chits[_id];
 
         uint256 participantIndex = getParticipantIndex(chit);
@@ -157,19 +134,63 @@ contract ChitFund {
         );
         require(chit.currentInstallment == 1, "Chit is not complete");
 
-        chit.participants[participantIndex].wallet.transfer(
-            chit.totalAmount
-        );
+        chit.participants[participantIndex].wallet.transfer(chit.totalAmount);
         chit.participants[participantIndex].paid = false;
     }
 
-    function getParticipants(uint256 _id)
-        public
-        view
-        returns (Participant[] memory)
-    {
+    function getParticipants(
+        uint256 _id
+    ) public view returns (Participant[] memory) {
         Chit storage chit = chits[_id];
 
         return chit.participants;
     }
+
+    function getMaxParticipants(uint256 _id) public view returns (uint256) {
+        Chit storage chit = chits[_id];
+
+        return chit.numberOfParticipants;
+    }
+
+    function getChits() public view returns (Chit[] memory) {
+        Chit[] memory _chits = new Chit[](numberOfChits);
+
+        for (uint256 i = 0; i < numberOfChits; i++) {
+            _chits[i] = chits[i];
+        }
+
+        return _chits;
+    }
+
+    //function to transer a particular amount of ether from caller to another address
+    function transferChit(address payable _to, uint256 _amount) public {
+        _to.transfer(_amount);
+    }
+
+    //function to get the balance of the contract
+    function getBalance() public view returns (uint256) {
+        return address(this).balance;
+    }
+
+    //function to get particu;ar amount of ether from the contract
+    function getAmount(uint256 _amount) public {
+        payable(msg.sender).transfer(_amount);
+    }
+
+    //function to get the address of the contract
+    function getAddress() public view returns (address) {
+        return address(this);
+    }
+
+    // function to accept installment amount stored in chit.installmentAmount to the contract
+    // function acceptInstallment(uint256 _id) public payable {
+    //     Chit storage chit = chits[_id];
+    //     require(msg.value == chit.installmentAmount, "Amount not equal to installment amount");
+    // }
+
+    //function to pay particular amount of ether to the contract
+    // function payAmount(uint256 _amount) public payable {
+    //     require(msg.value == _amount);
+    // }
+    
 }
