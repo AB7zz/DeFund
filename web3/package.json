@@ -9,7 +9,9 @@
     "hardhat": "^2.10.1"
   },
   "dependencies": {
-    "@thirdweb-dev/contracts": "^3",
+    "@maticnetwork/pos-portal": "^1.5.2",
+    "@openzeppelin/contracts": "^4.8.3",
+    "@thirdweb-dev/contracts": "^3.5.0",
     "dotenv": "^16.0.3"
   }
 }
